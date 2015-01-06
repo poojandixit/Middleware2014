@@ -8,7 +8,7 @@ import javax.ejb.Remote;
 import de.tud.middleware.enterprise.core.ProductData;
 
 /**
- * Interface to manage items in database: addition and deletion
+ * Interface to manage product items in database: addition and deletion
  *
  */
 @Remote // if client is not in the same JVM, if client is in the same JVM then use @Local
