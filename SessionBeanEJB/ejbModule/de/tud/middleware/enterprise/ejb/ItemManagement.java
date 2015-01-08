@@ -3,6 +3,8 @@
  */
 package de.tud.middleware.enterprise.ejb;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import de.tud.middleware.enterprise.core.ProductData;
@@ -17,5 +19,7 @@ public interface ItemManagement {
 	void addItemtoProductDB(ProductData productData);
 	
 	void removeItemfromProductDB(ProductData productData);
+	
+	List<ProductData> fetchItemsfromProductDB();
 
 }

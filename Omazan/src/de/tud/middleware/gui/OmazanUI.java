@@ -1,17 +1,9 @@
 package de.tud.middleware.gui;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.swing.*;
+import java.util.Properties;
 
 import de.tud.middleware.core.CustomerData;
-import de.tud.middleware.core.ProductData;
-import de.tud.middleware.database.DatabaseOperations;
-import de.tud.middleware.util.Constants;
 
 public class OmazanUI extends javax.swing.JFrame {
 
@@ -344,26 +336,33 @@ public class OmazanUI extends javax.swing.JFrame {
 				/*
 				 *  TODO: Insert Customer details into database
 				 */
+			/*	
+				
 				ProductData pd = new ProductData();
 	//			pd.setId(Integer.getInteger(txtProdID.getText()));
 				pd.setProductName(txtProdName.getText());
 				/*
 				 * Code for insertion in table in database
 				 */
-				String query = "INSERT INTO "
+			/*	String query = "INSERT INTO "
 						+ Constants.PRODUCT_TABLE 
 						+ " (name) "
 						+ "values(\""+pd.getProductName()+ "\")";
 				
 				DatabaseOperations.updateTable(query);
+			*/	
 				
 				// JUST FOR DEBUGGING ... REMOVE AFTER ALL IS GOOD
-				String query1 = "SELECT id,name FROM product";
-				ArrayList<ProductData> pdList = DatabaseOperations.fetchProductRows(query1);
-				for(int i=0; i<pdList.size(); i++) {
-						System.out.println("product id : "+pdList.get(i).getId()
-								+" product name : "+pdList.get(i).getProductName());
-				}
+//				String query1 = "SELECT id,name FROM product";
+//				ArrayList<ProductData> pdList = DatabaseOperations.fetchProductRows(query1);
+//				for(int i=0; i<pdList.size(); i++) {
+//						System.out.println("product id : "+pdList.get(i).getId()
+//								+" product name : "+pdList.get(i).getProductName());
+//				}
+				
+				Properties p = new Properties();
+		//		InitialContext context = new InitialContext();
+		//		ItemManagement im = (ItemManagement) 
 			}
         });
 

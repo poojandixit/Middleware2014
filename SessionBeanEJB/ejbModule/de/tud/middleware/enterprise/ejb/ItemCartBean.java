@@ -14,7 +14,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
 import de.tud.middleware.enterprise.core.ItemCartData;
-import de.tud.middleware.enterprise.core.ProductData;
 
 /**
  * Items added into cart and when checked out the itemlist table in the DB
