@@ -362,7 +362,8 @@ public class OmazanUI extends javax.swing.JFrame {
 				
 				Properties p = new Properties();
 		//		InitialContext context = new InitialContext();
-		//		ItemManagement im = (ItemManagement) 
+		//		ItemManagement im = (ItemManagement) new ItemManagement();
+				
 			}
         });
 

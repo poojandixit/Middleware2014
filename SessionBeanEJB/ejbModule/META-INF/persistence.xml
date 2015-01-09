@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+
+	<persistence-unit name="prod_cust_cart_mgm" transaction-type="JTA">
+		<description>This unit manages Products, Customers and Items in Cart.</description>
+		<jta-data-source>jdbc:mysql://localhost:3306/omazan</jta-data-source>
+		<class>de.tud.middleware.enterprise.core.CustomerData</class>
+		<class>de.tud.middleware.enterprise.core.ProductData</class>
+		<class>de.tud.middleware.enterprise.core.ItemCartData</class>
+	</persistence-unit>
+
+</persistence>
