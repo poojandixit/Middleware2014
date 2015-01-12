@@ -1,6 +1,8 @@
 package de.tud.middleware.enterprise.ejb;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -9,6 +11,8 @@ import javax.persistence.PersistenceContextType;
 
 import de.tud.middleware.enterprise.core.CustomerData;
 
+@Stateful
+@EJB(beanInterface = UserManagement.class, beanName = "UserManagementBean", name = "java:global/uManagement")
 public class UserManagementBean implements UserManagement {
 
 	/*

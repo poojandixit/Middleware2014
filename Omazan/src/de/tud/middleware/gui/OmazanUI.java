@@ -1,14 +1,24 @@
 package de.tud.middleware.gui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Properties;
 
+import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import de.tud.middleware.core.CustomerData;
+import de.tud.middleware.enterprise.core.ProductData;
+import de.tud.middleware.enterprise.ejb.ItemManagement;
 
 public class OmazanUI extends javax.swing.JFrame {
 
 	//Fix for serial version ID
 	private static final long serialVersionUID = 1L;
+	
+	@EJB
+	private static ItemManagement im;
 	
 	/*
      *  TODO: Call the method to initiate the components
@@ -360,9 +370,24 @@ public class OmazanUI extends javax.swing.JFrame {
 //								+" product name : "+pdList.get(i).getProductName());
 //				}
 				
-				Properties p = new Properties();
-		//		InitialContext context = new InitialContext();
-		//		ItemManagement im = (ItemManagement) new ItemManagement();
+				try {
+				//	Properties properties = new Properties();
+				//	properties.put("java.naming.factory.initial","com.sun.enterprise.naming.SerialInitContextFactory");
+				//	properties.put("java.naming.factory.url.pkgs","com.sun.enterprise.naming");
+				//	properties.put("org.omg.CORBA.ORBInitialHost", "localhost");
+				//	properties.put("org.omg.CORBA.ORBInitialPort", "3306");
+					InitialContext context = new InitialContext();
+				//	ItemManagement im;
+					im = (ItemManagement) context.lookup("java:global/MiddlewareEAR/SessionBeanEJB/ItemManagementBean");
+					List<ProductData> plist = im.fetchItemsfromProductDB();
+					for(int i=0;i<plist.size();i++) {
+						System.out.println("id="+plist.get(i).getId()
+								+ "name="+plist.get(i).getProductName());
+					}
+				} catch (NamingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}
         });

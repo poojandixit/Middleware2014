@@ -6,6 +6,7 @@ package de.tud.middleware.enterprise.ejb;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -22,6 +23,7 @@ import de.tud.middleware.enterprise.core.ItemCartData;
  */
 
 @Stateful
+@EJB(beanInterface = ItemCart.class, beanName = "ItemCartBean", name = "java:global/iCart")
 public class ItemCartBean implements ItemCart {
 	
 	/*
@@ -32,7 +34,7 @@ public class ItemCartBean implements ItemCart {
 	 * 'unitName = "prod_cust_cart_mgm"' lets entityManager object to know
 	 * which entity classes to refer to.
 	 * 
-	 * 'type = PersistenceContextType.EXTENDED' is or persistent context 
+	 * 'type = PersistenceContextType.EXTENDED' is for persistent context 
 	 * to have lifetime across multiple transactions.
 	 */
 	@PersistenceContext(unitName = "prod_cust_cart_mgm", type = PersistenceContextType.EXTENDED)

@@ -5,7 +5,7 @@
 
 	<persistence-unit name="prod_cust_cart_mgm" transaction-type="JTA">
 		<description>This unit manages Products, Customers and Items in Cart.</description>
-		<jta-data-source>jdbc:mysql://localhost:3306/omazan</jta-data-source>
+		<jta-data-source>jdbc/__omazan</jta-data-source>
 		<class>de.tud.middleware.enterprise.core.CustomerData</class>
 		<class>de.tud.middleware.enterprise.core.ProductData</class>
 		<class>de.tud.middleware.enterprise.core.ItemCartData</class>

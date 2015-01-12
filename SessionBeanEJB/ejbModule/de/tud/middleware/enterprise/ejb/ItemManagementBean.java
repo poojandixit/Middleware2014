@@ -3,6 +3,7 @@ package de.tud.middleware.enterprise.ejb;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -14,6 +15,7 @@ import javax.persistence.TypedQuery;
 import de.tud.middleware.enterprise.core.ProductData;
 
 @Stateful
+@EJB(beanInterface = ItemManagement.class, beanName = "ItemManagementBean", name = "java:global/iManagement")
 public class ItemManagementBean implements ItemManagement {
 
 	/*
