@@ -20,6 +20,8 @@ public interface ItemManagement {
 	
 	void removeItemfromProductDB(ProductData productData);
 	
-	List<ProductData> fetchItemsfromProductDB();
-
+	List<ProductData> fetchAllProductItems();
+	
+	ProductData fetchByProductId(String id);
+	
 }

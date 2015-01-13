@@ -1,5 +1,7 @@
 package de.tud.middleware.enterprise.ejb;
 
+import java.util.List;
+
 import javax.ejb.Remote;
 
 import de.tud.middleware.enterprise.core.CustomerData;
@@ -15,5 +17,9 @@ public interface UserManagement {
 	void addUsertoCustomerDB(CustomerData customerData);
 	
 	void removeUserfromCustomerDB(CustomerData customerData);
+	
+	CustomerData fetchByCustomerId(String id);
+	
+	List<CustomerData> fetchAllCustomers();
 	
 }

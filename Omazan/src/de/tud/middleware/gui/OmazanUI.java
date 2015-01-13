@@ -378,8 +378,8 @@ public class OmazanUI extends javax.swing.JFrame {
 				//	properties.put("org.omg.CORBA.ORBInitialPort", "3306");
 					InitialContext context = new InitialContext();
 				//	ItemManagement im;
-					im = (ItemManagement) context.lookup("java:global/MiddlewareEAR/SessionBeanEJB/ItemManagementBean");
-					List<ProductData> plist = im.fetchItemsfromProductDB();
+					im = (ItemManagement) context.lookup("java:global/MiddlewareEAR/SessionBeanEJB/ItemManagement");
+					List<ProductData> plist = im.fetchAllProductItems();
 					for(int i=0;i<plist.size();i++) {
 						System.out.println("id="+plist.get(i).getId()
 								+ "name="+plist.get(i).getProductName());
@@ -391,9 +391,6 @@ public class OmazanUI extends javax.swing.JFrame {
 				
 			}
         });
-
-		
-		
 
         btnCancel.setText("Cancel");
         btnCancel.addActionListener(new java.awt.event.ActionListener() {

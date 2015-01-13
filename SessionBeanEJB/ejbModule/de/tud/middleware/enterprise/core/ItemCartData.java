@@ -7,10 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "itemlist", catalog = "omazan")
+@NamedQueries({
+	@NamedQuery(name="FetchAllItemsByCustId", query=" SELECT OBJECT(a) FROM ItemCartData AS a WHERE a.id = ?1")
+})
 /*
  * 'itemlist' table maintains the Customer ID <-> Product ID data.
  * Table has 3 fields. id, custid and prodid.

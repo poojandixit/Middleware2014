@@ -10,6 +10,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import de.tud.middleware.enterprise.core.ProductData;
@@ -56,10 +57,19 @@ public class ItemManagementBean implements ItemManagement {
 	}
 
 	@Override
-	public List<ProductData> fetchItemsfromProductDB() {
+	public List<ProductData> fetchAllProductItems() {
 		// TODO Auto-generated method stub
-		TypedQuery<ProductData> myQuery = entityManager.createQuery("FROM ProductData", ProductData.class);
-		return myQuery.getResultList();
+		Query query = entityManager.createNamedQuery("FetchAllProductItems");
+		return query.getResultList();
+	}
+
+	@Override
+	public ProductData fetchByProductId(String id) {
+		// TODO Auto-generated method stub
+//		Query query = entityManager.createNamedQuery("FetchByProductId");
+//		query.setParameter(0, id);
+//		return (ProductData) (query.getSingleResult());
+		return (ProductData) entityManager.find(ProductData.class, id);
 	}
 
 }

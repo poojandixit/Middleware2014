@@ -6,6 +6,7 @@ package de.tud.middleware.enterprise.ejb;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
@@ -38,7 +39,7 @@ public class ItemCartBean implements ItemCart {
 	 * to have lifetime across multiple transactions.
 	 */
 	@PersistenceContext(unitName = "prod_cust_cart_mgm", type = PersistenceContextType.EXTENDED)
-	private EntityManager entityManager;
+	@Resource private EntityManager entityManager;
 
 	private ArrayList<ItemCartData> itemCartList; 
 	

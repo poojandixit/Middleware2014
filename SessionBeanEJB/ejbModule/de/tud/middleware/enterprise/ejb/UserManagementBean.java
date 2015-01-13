@@ -1,5 +1,7 @@
 package de.tud.middleware.enterprise.ejb;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -8,6 +10,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 
 import de.tud.middleware.enterprise.core.CustomerData;
 
@@ -50,6 +53,22 @@ public class UserManagementBean implements UserManagement {
 	public void removeUserfromCustomerDB(CustomerData customerData) {
 		// TODO Auto-generated method stub
 		entityManager.remove(customerData);
+	}
+
+	@Override
+	public CustomerData fetchByCustomerId(String id) {
+		// TODO Auto-generated method stub
+//		Query query = entityManager.createNamedQuery("FetchByCustomerId");
+//		query.setParameter(0, id);
+//		return (CustomerData) (query.getSingleResult());
+		return (CustomerData)entityManager.find(CustomerData.class, id);
+	}
+
+	@Override
+	public List<CustomerData> fetchAllCustomers() {
+		// TODO Auto-generated method stub
+		Query query = entityManager.createNamedQuery("FetchAllCustomers");
+		return query.getResultList();
 	}
 
 }
