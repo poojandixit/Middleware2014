@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <head>
+        <title>Omazan</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h1><font face="verdana" color="blue"><b>OMAZAN</b></font></h1>
+        <h1>Product Management</h1>
+        <font face="verdana" color="green"><b>FOR ADMIN/EMPLOYEE USE ONLY!</b></font>
+        <div><h2>This page manages product items</h2></div>
+        <div>
+            <p><b><u>Enter New Product Details</u></b></p>
+            <h:form>
+                <h:outputLabel for="productNameInputText" rendered="true" value="Enter New Product Name: " />
+                <h:inputText id="productNameInputText" required="true" value="#{productManager.name}" /><br />
+                <h:commandButton value="Submit" action="#{productManager.submitItem}" />
+            </h:form>
+            <p><b><u>Remove A Product Item</u></b></p>
+            <h:form>
+                <h:outputLabel for="productIdInputText" rendered="true" value="Enter Product Id To Delete Item: " />
+                <h:inputText id="productIdInputText" required="true" value="#{productManager.id}" /><br />
+                <h:commandButton value="Submit" action="#{productManager.removeItem}" />
+            </h:form>
+            <p><b><u>Edit A Product Item</u></b></p>
+            <h:form>
+                <h:outputLabel for="productEditIdInputText" rendered="true" value="Enter Product Id To Edit: " />
+                <h:inputText id="productEditIdInputText" required="true" value="#{productManager.id}" /><br />
+                <h:outputLabel for="productEditNameInputText" rendered="true" value="Enter New Product Item Name: " />
+                <h:inputText id="productEditNameInputText" required="true" value="#{productManager.name}" /><br />
+                <h:commandButton value="Submit" action="#{productManager.editItem}" />
+            </h:form>
+        </div>
+        <h3><u>Product Item List</u></h3>
+        <p><b>Total Items: <h:outputLabel for="totalItemCount" rendered="true" value="#{productManager.count}"/></b></p>
+        <div>
+        <h:dataTable
+                    var="product"
+                    summary="Table of items"
+                    value="#{productManager.products}"
+                    rules="all"
+                    cellpadding="5">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID" />
+                        </f:facet>
+                        <h:outputText value="#{product.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="NAME" />
+                        </f:facet>
+                        <h:outputText value="#{product.name}" />
+                    </h:column>
+        </h:dataTable>
+        </div>
+    </body>
+</html>

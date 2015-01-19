@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <head>
+        <title>Omazan</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h1><font face="verdana" color="blue"><b>OMAZAN</b></font></h1>
+        <h1>My Account Management</h1>
+        <div><h2>This page manages users</h2></div>
+        <div>
+            <p><b><u>Edit My Account</u></b></p>
+            <h:form>
+                <h:outputLabel for="customerEditIdInputText" rendered="true" value="Enter Your Id To Edit: " />
+                <h:inputText id="customerEditIdInputText" required="true" value="#{customerManager.id}" /><br />
+                <h:outputLabel for="customerEditNameInputText" rendered="true" value="Enter Your New Name: " />
+                <h:inputText id="customerEditNameInputText" required="true" value="#{customerManager.name}" /><br />
+                <h:commandButton value="Submit" action="#{customerManager.editCustomer}" />
+            </h:form>
+            <p><b><u>Delete My Account</u></b></p>
+            <h:form>
+                <h:outputLabel for="customerIdInputText" rendered="true" value="Enter Your Id To Delete Account: " />
+                <h:inputText id="customerIdInputText" required="true" value="#{customerManager.id}" /><br />
+                <h:commandButton value="Submit" action="#{customerManager.removeCustomer}" />
+            </h:form>
+        </div>        
+    </body>
+</html>
