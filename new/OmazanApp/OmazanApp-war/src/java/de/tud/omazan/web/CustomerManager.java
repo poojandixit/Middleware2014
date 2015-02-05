@@ -5,8 +5,8 @@
  */
 package de.tud.omazan.web;
 
-import de.tud.omazan.ejb.CustomerEntity;
-import de.tud.omazan.ejb.CustomerEntityFacadeLocal;
+import de.tud.omazan.ejb.CustomerEntityFacadeRemote;
+import omazan.entities.CustomerEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,7 +21,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class CustomerManager {
     @EJB
-    private CustomerEntityFacadeLocal customerEntityFacade;
+    private CustomerEntityFacadeRemote customerEntityFacade;
     private CustomerEntity ce;
     private List<CustomerEntity> customers;
     private String name;

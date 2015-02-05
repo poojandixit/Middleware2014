@@ -5,14 +5,27 @@
  */
 package client.ui;
 
+import de.tud.omazan.ejb.CustomerEntityFacadeRemote;
+import de.tud.omazan.ejb.ProductEntityFacadeRemote;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import omazan.entities.CustomerEntity;
+import omazan.entities.ProductEntity;
 
 public class OmazanUI extends javax.swing.JFrame {
+    @EJB
+    private static ProductEntityFacadeRemote productEntityFacade;
+    @EJB
+    private static CustomerEntityFacadeRemote customerEntityFacade;
 
 	//Fix for serial version ID
 	private static final long serialVersionUID = 1L;
-	
+        
 	/*
      *  TODO: Call the method to initiate the components
     */
@@ -332,13 +345,43 @@ public class OmazanUI extends javax.swing.JFrame {
         lblDescProd.setText("Description :");
 
         btnAdd.setText("Add");
+        
+        btnCusAdd.addMouseListener(new MouseAdapter() { 
+            public void mouseClicked(MouseEvent mouseEvent) {
+                            InitialContext context;
+                            try {
+                                context = new InitialContext();
+                                customerEntityFacade = (CustomerEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/CustomerEntityFacade");
+                                CustomerEntity pe = new CustomerEntity();
+                                System.out.println("Edit: Id of customer: "+txtCustID.getText());
+                                pe.setId(Long.parseLong(txtCustID.getText()));
+                                pe.setName(txtCustName.getText());
+                                customerEntityFacade.edit(pe);
+                            } catch (NamingException ex) {
+                                Logger.getLogger(OmazanUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+            }
+        });
 		
         /*Event generated on click of adding product*/
-		btnAdd.addMouseListener(new MouseAdapter() {
+		btnProdAdd.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent mouseEvent) {
 				/*
 				 *  TODO: Insert Customer details into database
 				 */
+                            InitialContext context;
+                            try {
+                                context = new InitialContext();
+                                productEntityFacade = (ProductEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ProductEntityFacade");
+                                ProductEntity pe = new ProductEntity();
+                                System.out.println("Edit: Id of product: "+txtProdID.getText());
+                                pe.setId(Long.parseLong(txtProdID.getText()));
+                                pe.setName(txtProdName.getText());
+                                productEntityFacade.edit(pe);
+                            } catch (NamingException ex) {
+                                Logger.getLogger(OmazanUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            
 			}
         });
 
@@ -464,13 +507,38 @@ public class OmazanUI extends javax.swing.JFrame {
 		/*Event generated on click of add customer button */
 		 btnAddCust.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent mouseEvent) {
-				/*
-				 *  TODO: Insert Customer details into database
-				 */
-				int prodId = Integer.getInteger(txtProdID.getText());
+				InitialContext context;
+                         try {
+				context = new InitialContext();
+                                customerEntityFacade = (CustomerEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/CustomerEntityFacade");
+                                CustomerEntity pe = new CustomerEntity();
+                                System.out.println("Name of customer: "+txtNameCustomer.getText());
+                                pe.setName(txtNameCustomer.getText());
+                                customerEntityFacade.create(pe);
+                         } catch (Exception e) {
+                             
+                         }
 
 			}
         });
+                 
+                 btnEditProd.addMouseListener(new MouseAdapter() { 
+                     public void mouseClicked(MouseEvent mouseEvent) {
+                         InitialContext context;
+                         try {
+				context = new InitialContext();
+                                productEntityFacade = (ProductEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ProductEntityFacade");
+                                ProductEntity pe = new ProductEntity();
+                                System.out.println("Name of product: "+txtNameProd.getText());
+                                pe.setId((Long.parseLong(txtProdID.getText())));
+                                pe.setName(txtProdName.getText());
+                                productEntityFacade.edit(pe);
+                         } catch (Exception e) {
+                             
+                         }
+
+			}
+                 });
 
         btnCancelCust.setText("Cancel");
         btnCancelCust.addActionListener(new java.awt.event.ActionListener() {

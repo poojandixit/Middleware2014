@@ -5,8 +5,8 @@
  */
 package de.tud.omazan.web;
 
-import de.tud.omazan.ejb.ProductEntity;
-import de.tud.omazan.ejb.ProductEntityFacadeLocal;
+import de.tud.omazan.ejb.ProductEntityFacadeRemote;
+import omazan.entities.ProductEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class ProductManager implements Serializable {
     @EJB
-    private ProductEntityFacadeLocal productEntityFacade;
+    private ProductEntityFacadeRemote productEntityFacade;
     private ProductEntity pe;
     private List<ProductEntity> products;
     private String name;

@@ -10,13 +10,14 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import omazan.entities.CustomerEntity;
 
 /**
  *
  * @author raghu
  */
 @Stateless
-public class CustomerEntityFacade implements CustomerEntityFacadeLocal {
+public class CustomerEntityFacade implements CustomerEntityFacadeRemote {
     @PersistenceContext(unitName = "OmazanApp-ejbPU")
     private EntityManager em;
 
