@@ -29,6 +29,14 @@ public class ProductManager implements Serializable {
     private Long id;
     private int count;
 
+    public ProductEntity getPe() {
+        return pe;
+    }
+
+    public void setPe(ProductEntity pe) {
+        this.pe = pe;
+    }
+
     public int getCount() {
         this.count = productEntityFacade.count();
         return count;
