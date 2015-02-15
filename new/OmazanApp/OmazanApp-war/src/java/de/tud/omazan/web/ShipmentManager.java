@@ -56,6 +56,11 @@ public class ShipmentManager implements Serializable {
     }
 
     public List<ShipmentEntity> getShipments() {
+        try {
+            this.shipments = shipmentEntityFacade.findAll();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return shipments;
     }
 
@@ -105,10 +110,15 @@ public class ShipmentManager implements Serializable {
         }
     }
     
+    public ShipmentEntity findEntity(long i_d) {
+        return shipmentEntityFacade.find(i_d);
+    }
+    
     public void editShipmentStatus() {
         try {
-            se = new ShipmentEntity();
-            se.setId(this.id);
+        //    se = new ShipmentEntity();
+        //    se.setId(this.id);
+            se = findEntity(this.id);
             se.setShipstatus(this.shipment_status);
             shipmentEntityFacade.edit(se);
         } catch(Exception e) {

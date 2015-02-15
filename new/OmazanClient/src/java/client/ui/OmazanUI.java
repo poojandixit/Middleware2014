@@ -8,6 +8,7 @@ import de.tud.omazan.ejb.CustomerEntityFacadeRemote;
 import de.tud.omazan.ejb.ProductEntityFacadeRemote;
 import javax.swing.*;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -43,6 +44,7 @@ public class OmazanUI extends javax.swing.JFrame {
         pnlAddEditCustData.setVisible(false);
         pnlAddProdDetails.setVisible(false);
         pnlPurchase.setVisible(false);
+        pnlShipmentPanel.setVisible(false);
 		}
 
     /**
@@ -60,6 +62,7 @@ public class OmazanUI extends javax.swing.JFrame {
          btnpurchasedprod = new javax.swing.JButton();
          lblPurchasedName = new javax.swing.JLabel();
          lblProductName = new javax.swing.JLabel();
+       
          
          lblLabelDetailsProduct = new javax.swing.JLabel();
          jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,6 +70,18 @@ public class OmazanUI extends javax.swing.JFrame {
          jScrollPane2 = new javax.swing.JScrollPane();
          tableCustomer = new javax.swing.JTable();
          lblLabelDeatilsCust = new javax.swing.JLabel();
+         lblCID= new javax.swing.JLabel();
+         txtCID=new javax.swing.JTextField();
+         
+         lblShipmentDetails = new javax.swing.JLabel();
+         lblShipmentID = new javax.swing.JLabel();
+         lblShipmentStatus = new javax.swing.JLabel();
+         txtShipmentID = new javax.swing.JTextField();
+         cmbxShipmentStatus = new javax.swing.JComboBox();
+         btnUpdateShipment = new javax.swing.JButton();
+         btnCancelShipment = new javax.swing.JButton();
+         pnlShipmentPanel=new javax.swing.JPanel();
+         btnEditShipment=new javax.swing.JButton();
 
         pnlCustomerData = new javax.swing.JPanel();
         lblCustData = new javax.swing.JLabel();
@@ -77,6 +92,7 @@ public class OmazanUI extends javax.swing.JFrame {
         btnCusAdd = new javax.swing.JButton();
         btnCustCancel = new javax.swing.JButton();
         pnlProductData = new javax.swing.JPanel();
+      
         lblProdData = new javax.swing.JLabel();
         lblProdID = new javax.swing.JLabel();
         lblProdName = new javax.swing.JLabel();
@@ -126,6 +142,7 @@ public class OmazanUI extends javax.swing.JFrame {
         lblLabelPurchase.setText("Purchase Details");
 
         lblPID.setText("Product ID :");
+        lblCID.setText("Customer ID :");
 
         btnpurchasedprod.setText("Purchase");
 
@@ -176,6 +193,7 @@ public class OmazanUI extends javax.swing.JFrame {
                 }
             });
             jScrollPane2.setViewportView(tableCustomer);
+                     
 
         lblProductName.setText("jLabel1");
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,7 +221,11 @@ public class OmazanUI extends javax.swing.JFrame {
                                                 .addComponent(btnpurchasedprod, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(btnBack))
-                                    .addComponent(txtPID)))
+                                    .addComponent(txtPID))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(lblCID)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtCID))
                                     .addGroup(pnlPurchaseLayout.createSequentialGroup()
                                 .addComponent(lblPurchasedName)
                                 .addGap(18, 18, 18)
@@ -226,7 +248,9 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlPurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPID)
-                    .addComponent(txtPID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCID)
+                    .addComponent(txtCID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPurchaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnpurchasedprod)
@@ -266,8 +290,7 @@ public class OmazanUI extends javax.swing.JFrame {
 				pnlCustomerAdd.setVisible(true);
 				
 			}
-        });
-        
+        });        
 
         btnCustCancel.setText("Cancel");
         btnCustCancel.addActionListener(new java.awt.event.ActionListener() {
@@ -324,7 +347,7 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        lblProdData.setText("Product Details");
+        lblProdData.setText("Product Details");          
 
         lblProdID.setText("ID :");
 
@@ -335,15 +358,40 @@ public class OmazanUI extends javax.swing.JFrame {
         btnProdAdd.setText("Update");
 
         btnProdCancel.setText("Cancel");
+        
+        lblShipmentID.setText("Shipment ID :");
+
+        lblShipmentStatus.setText("Shipment Status :");
+
+        txtShipmentID.setText(" ");
+
+        cmbxShipmentStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "packaging", "ontheway", "delivered", "cancelled" }));
+                
+        btnUpdateShipment.setText("Save");
+
+        btnCancelShipment.setText("Cancel");  
+        
+        btnCancelShipment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	btnCancelShipmentActionPerformed(evt);
+            }
+        });
+        
+        
         btnProdCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProdCancelActionPerformed(evt);
             }
         });
+        
+        lblShipmentDetails.setText("Shipment Details");
         /*Panel for editing product data*/
         javax.swing.GroupLayout pnlProductDataLayout = new javax.swing.GroupLayout(pnlProductData);
         pnlProductData.setLayout(pnlProductDataLayout);
+              
+         
         pnlProductDataLayout.setHorizontalGroup(
+	
             pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductDataLayout.createSequentialGroup()
                 .addGroup(pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -369,8 +417,8 @@ public class OmazanUI extends javax.swing.JFrame {
                                 .addComponent(lblProdID)
                                 .addGap(60, 60, 60)
                                 .addComponent(txtProdID, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
+                                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+
         pnlProductDataLayout.setVerticalGroup(
             pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlProductDataLayout.createSequentialGroup()
@@ -391,8 +439,30 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProdAdd)
-                    .addComponent(btnProdCancel)))
-        );
+                    .addComponent(btnProdCancel))));
+
+       pnlProductDataLayout.setVerticalGroup(
+                pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlProductDataLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(lblProdData)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblProdID)
+                        .addComponent(txtProdID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblProdName)
+                        .addComponent(txtProdName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblProdDesc)
+                        .addComponent(txtProdDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                    .addGroup(pnlProductDataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnProdAdd)
+                        .addComponent(btnProdCancel)))
+            );
 
         lblwelcome.setText("Welcome to Omazan!!");
 
@@ -456,6 +526,13 @@ public class OmazanUI extends javax.swing.JFrame {
                 btnAddProdActionPerformed(evt);
             }
         });
+        
+        btnEditShipment.setText("Shipment Details");
+        btnEditShipment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	btnEditShipmentActionPerformed(evt);
+            }
+        });
 
         btnEditProd.setText("Edit");
         btnEditProd.addActionListener(new java.awt.event.ActionListener() {
@@ -479,9 +556,60 @@ public class OmazanUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnEditProd, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnGoBack)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                        .addComponent(btnGoBack)
+                        .addGap(18,18,18)
+                        .addComponent(btnEditShipment)
+                     		))
+               .addContainerGap(136, Short.MAX_VALUE)));
+   
+   		//Panel for shipment details
+		javax.swing.GroupLayout pnlShipmentPanelLayout = new javax.swing.GroupLayout(pnlShipmentPanel);
+        pnlShipmentPanel.setLayout(pnlShipmentPanelLayout);
+        pnlShipmentPanelLayout.setHorizontalGroup(
+            pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlShipmentPanelLayout.createSequentialGroup()
+                .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlShipmentPanelLayout.createSequentialGroup()
+                        .addGap(149, 149, 149)
+                        .addComponent(lblShipmentDetails))
+                    .addGroup(pnlShipmentPanelLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblShipmentStatus)
+                            .addComponent(lblShipmentID)
+                            .addComponent(btnUpdateShipment))
+                        .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlShipmentPanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                                .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtShipmentID, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                    .addComponent(cmbxShipmentStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnlShipmentPanelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelShipment)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(151, 151, 151))
         );
+        pnlShipmentPanelLayout.setVerticalGroup(
+            pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlShipmentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblShipmentDetails)
+                .addGap(18, 18, 18)
+                .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblShipmentID)
+                    .addComponent(txtShipmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblShipmentStatus)
+                    .addComponent(cmbxShipmentStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(pnlShipmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdateShipment)
+                    .addComponent(btnCancelShipment))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+ 
         pnlAddEditLayout.setVerticalGroup(
             pnlAddEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAddEditLayout.createSequentialGroup()
@@ -491,7 +619,9 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addGroup(pnlAddEditLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddProd)
                     .addComponent(btnEditProd)
-                    .addComponent(btnGoBack))
+                    .addComponent(btnGoBack)
+                    .addComponent(btnEditShipment)
+                          )
                 .addGap(32, 32, 32))
         );
 
@@ -576,10 +706,12 @@ public class OmazanUI extends javax.swing.JFrame {
                                 .addComponent(btnAdd)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnCancel))
-                            .addComponent(lblIDGenerated))
+                            .addComponent(lblIDGenerated))                    
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-        );
+                );
+            
+            
         pnlAddProdDetailsLayout.setVerticalGroup(
             pnlAddProdDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAddProdDetailsLayout.createSequentialGroup()
@@ -598,7 +730,9 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAddProdDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
-                    .addComponent(btnCancel)))
+                    .addComponent(btnCancel)))               
+
+             
         );
 
         lblAddEditData.setText("Add/Edit Customer Data");
@@ -798,6 +932,10 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup().addContainerGap()
                 .addComponent(pnlPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                
+                 .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlShipmentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -819,6 +957,10 @@ public class OmazanUI extends javax.swing.JFrame {
                 .addComponent(pnlPurchase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
                 
+                .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlShipmentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 191, Short.MAX_VALUE))
+                
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlProductData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlAddProdDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -830,7 +972,20 @@ public class OmazanUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void btnCustCancelActionPerformed(java.awt.event.ActionEvent evt) {                                              
+    protected void btnCancelShipmentActionPerformed(ActionEvent evt) {
+		// Method called on canceling shipment
+    	pnlShipmentPanel.setVisible(false);
+    	pnlAddEdit.setVisible(true);
+		
+	}
+
+	protected void btnEditShipmentActionPerformed(java.awt.event.ActionEvent evt) {
+		// Method to pop the shipment details panel
+		pnlAddEdit.setVisible(false);
+		pnlShipmentPanel.setVisible(true);
+	}
+
+	private void btnCustCancelActionPerformed(java.awt.event.ActionEvent evt) {                                              
         /*Action performed on click of cancel*/
         txtCustID.setText("");
         txtCustName.setText("");
@@ -1020,9 +1175,19 @@ public class OmazanUI extends javax.swing.JFrame {
     private javax.swing.JLabel lblLabelDeatilsCust;
     private javax.swing.JTable tableCustomer;
     private javax.swing.JButton btnBack;
+    private javax.swing.JLabel lblCID;
+    private javax.swing.JTextField txtCID;
+    private javax.swing.JTextField txtShipmentID;
+    private javax.swing.JLabel lblShipmentDetails;
+    private javax.swing.JLabel lblShipmentID;
+    private javax.swing.JLabel lblShipmentStatus;
+    private javax.swing.JComboBox cmbxShipmentStatus;
+    private javax.swing.JButton btnCancelShipment;
+    private javax.swing.JButton btnUpdateShipment;
+    private javax.swing.JPanel pnlShipmentPanel;
+    private javax.swing.JButton btnEditShipment;
     // End of variables declaration      
-	
-	
+
 }
 
   

@@ -11,45 +11,24 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <head>
-        <title>Customer Omazan Page</title>
+        <title>Welcome Omazan Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <h1><font face="verdana" color="blue"><b>OMAZAN</b></font></h1>
-        <h1>Customer Shopping Portal</h1>
-        <font face="verdana" color="green"><b> </b></font>
+        <h1>Shipment Management Portal</h1>
+        <font face="verdana" color="green"><b>FOR ADMIN/EMPLOYEE USE ONLY!</b></font>
+        <div><h2>This page manages shipment</h2></div>
         <div>
-            <p><b><u>Purchase Items</u></b></p>
+            <p><b><u>Change Shipment Status</u></b></p>
             <h:form>
-                <h:outputLabel for="customerIdInputText" rendered="true" value="Enter Customer Id: " />
-                <h:inputText id="shipmentEditIdInputText" required="true" value="#{shipmentManager.custid}" /><br />
-                <h:outputLabel for="customerItemInputText" rendered="true" value="Enter Product Item: " />
-                <h:inputText id="shipmentEditStatusInputText" required="true" value="#{shipmentManager.prodid}" /><br />
-                <h:commandButton value="Purchase" action="#{shipmentManager.purchaseItem}" />
+                <h:outputLabel for="shipmentEditIdInputText" rendered="true" value="Enter Shipment Id: " />
+                <h:inputText id="shipmentEditIdInputText" required="true" value="#{shipmentManager.id}" /><br />
+                <h:outputLabel for="shipmentEditStatusInputText" rendered="true" value="Enter Shipment Status: " />
+                <h:inputText id="shipmentEditStatusInputText" required="true" value="#{shipmentManager.shipment_status}" /><br />
+                <h:outputLabel for="shipmentEditPossibleStatusInputText" rendered="true" value="(packing, ontheway, delivered, cancelled)" />
+                <h:commandButton value="Submit" action="#{shipmentManager.editShipmentStatus}" />
             </h:form>
-        </div>
-        <h3><u>Product Item List</u></h3>
-        <p><b>Total Items: <h:outputLabel for="totalItemCount" rendered="true" value="#{productManager.count}"/></b></p>
-        <div>
-        <h:dataTable
-                    var="product"
-                    summary="Table of items"
-                    value="#{productManager.products}"
-                    rules="all"
-                    cellpadding="5">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="ID" />
-                        </f:facet>
-                        <h:outputText value="#{product.id}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="NAME" />
-                        </f:facet>
-                        <h:outputText value="#{product.name}" />
-                    </h:column>
-        </h:dataTable>
         </div>
         <h3><u>Customer List</u></h3>
         <p><b>Total Users: <h:outputLabel for="totalUserCount" rendered="true" value="#{customerManager.count}"/></b></p>

@@ -4,13 +4,110 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <head>
-        <title>TODO supply a title</title>
+        <title>Customer Omazan Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div>Still Under Development</div>
+        <h1><font face="verdana" color="blue"><b>OMAZAN</b></font></h1>
+        <h1>Customer Shopping Portal</h1>
+        <font face="verdana" color="green"><b> </b></font>
+        <div>
+            <p><b><u>Purchase Items</u></b></p>
+            <h:form>
+                <h:outputLabel for="customerIdInputText" rendered="true" value="Enter Customer Id: " />
+                <h:inputText id="shipmentEditIdInputText" required="true" value="#{shipmentManager.custid}" /><br />
+                <h:outputLabel for="customerItemInputText" rendered="true" value="Enter Product Item: " />
+                <h:inputText id="shipmentEditStatusInputText" required="true" value="#{shipmentManager.prodid}" /><br />
+                <h:commandButton value="Purchase" action="#{shipmentManager.purchaseItem}" />
+            </h:form>
+        </div>
+        <h3><u>Product Item List</u></h3>
+        <p><b>Total Items: <h:outputLabel for="totalItemCount" rendered="true" value="#{productManager.count}"/></b></p>
+        <div>
+        <h:dataTable
+                    var="product"
+                    summary="Table of items"
+                    value="#{productManager.products}"
+                    rules="all"
+                    cellpadding="5">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID" />
+                        </f:facet>
+                        <h:outputText value="#{product.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="NAME" />
+                        </f:facet>
+                        <h:outputText value="#{product.name}" />
+                    </h:column>
+        </h:dataTable>
+        </div>
+        <h3><u>Customer List</u></h3>
+        <p><b>Total Users: <h:outputLabel for="totalUserCount" rendered="true" value="#{customerManager.count}"/></b></p>
+        <div>
+        <h:dataTable
+                    var="customer"
+                    summary="Table of Users"
+                    value="#{customerManager.customers}"
+                    rules="all"
+                    cellpadding="5">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID" />
+                        </f:facet>
+                        <h:outputText value="#{customer.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="NAME" />
+                        </f:facet>
+                        <h:outputText value="#{customer.name}" />
+                    </h:column>
+        </h:dataTable>
+        </div>
+        <h3><u>Shipment List</u></h3>
+        <p><b>Total Shipments: <h:outputLabel for="totalShipmentsCount" rendered="true" value="#{shipmentManager.count}"/></b></p>
+        <div>
+        <h:dataTable
+                    var="shipment"
+                    summary="Table of Shipments"
+                    value="#{shipmentManager.shipments}"
+                    rules="all"
+                    cellpadding="5">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID" />
+                        </f:facet>
+                        <h:outputText value="#{shipment.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="CUST_ID" />
+                        </f:facet>
+                        <h:outputText value="#{shipment.custid}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="PROD_ID" />
+                        </f:facet>
+                        <h:outputText value="#{shipment.prodid}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="SHIP_STATUS" />
+                        </f:facet>
+                        <h:outputText value="#{shipment.shipstatus}" />
+                    </h:column>
+        </h:dataTable>
+        </div>
     </body>
 </html>
