@@ -10,6 +10,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import omazan.entities.ShipmentEntity;
 
 /**
@@ -25,8 +26,10 @@ public class ShipmentEntityFacade implements ShipmentEntityFacadeRemote {
     }
 
     @Override
-    public void create(ShipmentEntity shipmentEntity) {
+    public ShipmentEntity create(ShipmentEntity shipmentEntity) {
         em.persist(shipmentEntity);
+        em.flush();
+        return shipmentEntity;
     }
 
     @Override
@@ -49,6 +52,17 @@ public class ShipmentEntityFacade implements ShipmentEntityFacadeRemote {
         try {
             return em.createNamedQuery("findAllShipments")
                      .getResultList();
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+    }
+    
+    @Override
+    public List<ShipmentEntity> findByCustId(long cid) {
+        try {
+            Query query = em.createNamedQuery("findAllShipmentsForGivenCust");
+            query.setParameter("custid", cid);
+            return query.getResultList();
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }

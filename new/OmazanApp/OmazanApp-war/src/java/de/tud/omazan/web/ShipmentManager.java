@@ -6,6 +6,7 @@
 package de.tud.omazan.web;
 
 import de.tud.omazan.ejb.ShipmentEntityFacadeRemote;
+import de.tud.omazan.ejb.TruckEntityFacadeRemote;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import omazan.entities.ShipmentEntity;
+import omazan.entities.TruckEntity;
 
 /**
  *
@@ -23,6 +25,8 @@ import omazan.entities.ShipmentEntity;
 public class ShipmentManager implements Serializable {
     @EJB
     private ShipmentEntityFacadeRemote shipmentEntityFacade;
+    @EJB
+    private TruckEntityFacadeRemote truckEntityFacade;
     private ShipmentEntity se;
     private List<ShipmentEntity> shipments;
     private String shipment_status;
@@ -54,7 +58,7 @@ public class ShipmentManager implements Serializable {
     public void setSe(ShipmentEntity se) {
         this.se = se;
     }
-
+    
     public List<ShipmentEntity> getShipments() {
         try {
             this.shipments = shipmentEntityFacade.findAll();
@@ -75,7 +79,7 @@ public class ShipmentManager implements Serializable {
     public void setShipment_status(String shipment_status) {
         this.shipment_status = shipment_status;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -85,6 +89,7 @@ public class ShipmentManager implements Serializable {
     }
 
     public int getCount() {
+        this.count = shipmentEntityFacade.count();
         return count;
     }
 
@@ -104,7 +109,13 @@ public class ShipmentManager implements Serializable {
             se.setProdid(this.prodid);
             se.setCustid(this.custid);
             se.setShipstatus("packing");
-            shipmentEntityFacade.create(se);
+            ShipmentEntity se_with_id = shipmentEntityFacade.create(se);
+            TruckEntity te = new TruckEntity();
+            te.setLat(TruckManager.randomInt(1,1000));
+            te.setLng(TruckManager.randomInt(1,1000));
+            te.setShip_id(se_with_id.getId());
+            te.setExcp("none");
+            truckEntityFacade.create(te);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -116,8 +127,6 @@ public class ShipmentManager implements Serializable {
     
     public void editShipmentStatus() {
         try {
-        //    se = new ShipmentEntity();
-        //    se.setId(this.id);
             se = findEntity(this.id);
             se.setShipstatus(this.shipment_status);
             shipmentEntityFacade.edit(se);

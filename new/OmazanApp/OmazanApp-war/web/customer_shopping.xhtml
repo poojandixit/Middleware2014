@@ -28,6 +28,40 @@ and open the template in the editor.
                 <h:commandButton value="Purchase" action="#{shipmentManager.purchaseItem}" />
             </h:form>
         </div>
+        <h3><u>Exception List</u></h3>
+        <div>
+        <h:dataTable
+                    var="excp"
+                    summary="Table of items"
+                    value="#{truckManager.excps}"
+                    rules="all"
+                    cellpadding="5">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Cust ID" />
+                        </f:facet>
+                        <h:outputText value="#{excp.cust_id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Cust Name" />
+                        </f:facet>
+                        <h:outputText value="#{excp.cust_name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Excecption" />
+                        </f:facet>
+                        <h:outputText value="#{excp.excp}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ship Id" />
+                        </f:facet>
+                        <h:outputText value="#{excp.ship_id}" />
+                    </h:column>
+        </h:dataTable>
+        </div>
         <h3><u>Product Item List</u></h3>
         <p><b>Total Items: <h:outputLabel for="totalItemCount" rendered="true" value="#{productManager.count}"/></b></p>
         <div>
@@ -106,6 +140,47 @@ and open the template in the editor.
                             <h:outputText value="SHIP_STATUS" />
                         </f:facet>
                         <h:outputText value="#{shipment.shipstatus}" />
+                    </h:column>
+        </h:dataTable>
+        </div>
+        <h3><u>Truck List</u></h3>
+        <p><b>Total Trucks: <h:outputLabel for="totaltrucksCount" rendered="true" value="#{truckManager.count}"/></b></p>
+        <div>
+        <h:dataTable
+                    var="truck"
+                    summary="Table of Trucks"
+                    value="#{truckManager.trucks}"
+                    rules="all"
+                    cellpadding="5">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID" />
+                        </f:facet>
+                        <h:outputText value="#{truck.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="LAT" />
+                        </f:facet>
+                        <h:outputText value="#{truck.lat}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="LNG" />
+                        </f:facet>
+                        <h:outputText value="#{truck.lng}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="EXCP" />
+                        </f:facet>
+                        <h:outputText value="#{truck.excp}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="SHIP_ID" />
+                        </f:facet>
+                        <h:outputText value="#{truck.ship_id}" />
                     </h:column>
         </h:dataTable>
         </div>

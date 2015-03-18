@@ -11,4 +11,19 @@
         <property name="driverClass" value="org.apache.derby.jdbc.ClientDriver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="jdbc/omazan__pm" object-type="user" pool-name="derby_net_omazan_rootPool"/>
+    <admin-object-resource enabled="true" jndi-name="jms/PositionMessage"  res-type="javax.jms.Queue"  res-adapter="jmsra">
+        <property name="Name" value="PhysicalQueue"/>
+    </admin-object-resource>
+    <connector-connection-pool name="jms/PositionMessageFactoryPool"  connection-definition-name="javax.jms.QueueConnectionFactory"  resource-adapter-name="jmsra"/>
+    <connector-resource enabled="true" jndi-name="jms/PositionMessageFactory" pool-name="jms/PositionMessageFactoryPool"  />
+    <admin-object-resource enabled="true" jndi-name="jms/ShipmentMessage"  res-type="javax.jms.Queue"  res-adapter="jmsra">
+        <property name="Name" value="PhysicalQueue"/>
+    </admin-object-resource>
+    <connector-connection-pool name="jms/ShipmentMessageFactoryPool"  connection-definition-name="javax.jms.QueueConnectionFactory"  resource-adapter-name="jmsra"/>
+    <connector-resource enabled="true" jndi-name="jms/ShipmentMessageFactory" pool-name="jms/ShipmentMessageFactoryPool"  />
+    <admin-object-resource enabled="true" jndi-name="jms/ExceptionalMessage"  res-type="javax.jms.Queue"  res-adapter="jmsra">
+        <property name="Name" value="PhysicalQueue"/>
+    </admin-object-resource>
+    <connector-connection-pool name="jms/ExceptionalMessageFactoryPool"  connection-definition-name="javax.jms.QueueConnectionFactory"  resource-adapter-name="jmsra"/>
+    <connector-resource enabled="true" jndi-name="jms/ExceptionalMessageFactory" pool-name="jms/ExceptionalMessageFactoryPool"  />
 </resources>

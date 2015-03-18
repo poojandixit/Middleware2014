@@ -6,26 +6,36 @@
 package client.ui;
 import de.tud.omazan.ejb.CustomerEntityFacadeRemote;
 import de.tud.omazan.ejb.ProductEntityFacadeRemote;
+import de.tud.omazan.ejb.ShipmentEntityFacadeRemote;
+import de.tud.omazan.ejb.TruckEntityFacadeRemote;
 import javax.swing.*;
 
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.Context;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import omazan.entities.CustomerEntity;
 import omazan.entities.ProductEntity;
+import omazan.entities.ShipmentEntity;
+import omazan.entities.TruckEntity;
 
 public class OmazanUI extends javax.swing.JFrame {
     @EJB
     private static ProductEntityFacadeRemote productEntityFacade;
     @EJB
     private static CustomerEntityFacadeRemote customerEntityFacade;
+    @EJB
+    private static ShipmentEntityFacadeRemote shipmentEntityFacade;
+    @EJB
+    private static TruckEntityFacadeRemote truckEntityFacade;
 
 	//Fix for serial version ID
 	private static final long serialVersionUID = 1L;
@@ -46,6 +56,41 @@ public class OmazanUI extends javax.swing.JFrame {
         pnlPurchase.setVisible(false);
         pnlShipmentPanel.setVisible(false);
 		}
+    
+    public static int randomInt(int min, int max) {
+     return (int) (Math.random()*(max-min))+min;
+    }
+    
+    public Object[][] getAllProds() throws NamingException {
+        Context context = new InitialContext();
+        productEntityFacade = (ProductEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ProductEntityFacade");
+        List<ProductEntity> pe_list = productEntityFacade.findAll();
+        Object[][] obj;
+        obj = new Object[pe_list.size()][2];
+        for(int i=0; i<pe_list.size(); i++) {
+            obj[i][0] = pe_list.get(i).getId();
+            obj[i][1] = pe_list.get(i).getName();
+        }
+        for(int i=0; i<pe_list.size(); i++) {
+            System.out.println(obj[i][0]+"-"+obj[i][1]);
+        }
+        return obj;
+    }
+    
+    public Object[][] getAllPurItems() throws NamingException {
+        Context context = new InitialContext();
+        shipmentEntityFacade = (ShipmentEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ShipmentEntityFacade");
+        productEntityFacade = (ProductEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ProductEntityFacade");
+        List<ShipmentEntity> se_list = shipmentEntityFacade.findAll();
+        Object[][] obj;
+        obj = new Object[se_list.size()][3];
+        for(int i=0; i<se_list.size(); i++) {
+            obj[i][0] = se_list.get(i).getCustid();
+            obj[i][1] = productEntityFacade.find(se_list.get(i).getProdid()).getName();
+            obj[i][2] = se_list.get(i).getShipstatus();
+        }
+        return obj;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -145,6 +190,34 @@ public class OmazanUI extends javax.swing.JFrame {
         lblCID.setText("Customer ID :");
 
         btnpurchasedprod.setText("Purchase");
+        
+        btnpurchasedprod.addMouseListener(new MouseAdapter() { 
+            public void mouseClicked(MouseEvent mouseEvent) {
+                            InitialContext context;
+                            try {
+                                context = new InitialContext();
+                                shipmentEntityFacade = (ShipmentEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ShipmentEntityFacade");
+                                context = new InitialContext();
+                                truckEntityFacade = (TruckEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/TruckEntityFacade");
+                                ShipmentEntity se = new ShipmentEntity();
+                                se.setProdid(Long.parseLong(txtPID.getText()));
+                                se.setCustid(Long.parseLong(txtCID.getText()));
+                                se.setShipstatus("packing");
+                                ShipmentEntity new_se = shipmentEntityFacade.create(se);
+                                TruckEntity te = new TruckEntity();
+                                te.setLat(randomInt(1,5000));
+                                te.setLng(randomInt(1,5000));
+                                te.setShip_id(new_se.getId());
+                                te.setExcp("none");
+                                truckEntityFacade.create(te);
+                                context = new InitialContext();
+                                productEntityFacade = (ProductEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ProductEntityFacade");
+                                lblPurchasedName.setText(productEntityFacade.find(new_se.getProdid()).getName());
+                            } catch (NamingException ex) {
+                                Logger.getLogger(OmazanUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+            }
+        });
 
         lblPurchasedName.setText("Purchased Product :");
         
@@ -152,37 +225,33 @@ public class OmazanUI extends javax.swing.JFrame {
         lblLabelDeatilsCust.setText("Customer Details");
 
         
-        tableProduct.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Prod ID", "Prod Name"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        
+        try {
+            tableProduct.setModel(new javax.swing.table.DefaultTableModel(
+                    getAllProds(),
+                    new String [] {
+                        "Prod ID", "Prod Name"
+                    }
+            ) {
+                Class[] types = new Class [] {
+                    java.lang.String.class, java.lang.String.class
+                };
+                
+                public Class getColumnClass(int columnIndex) {
+                    return types [columnIndex];
+                }
+            });
+        } catch (NamingException ex) {
+            Logger.getLogger(OmazanUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         jScrollPane1.setViewportView(tableProduct);
         
-        tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null},
-                    {null, null, null}
-                },
-                new String [] {
-                    "Cust Name", "Prod Name", "Status"
-                }
+        try {
+            tableCustomer.setModel(new javax.swing.table.DefaultTableModel(
+                    getAllPurItems(),
+                    new String [] {
+                        "Cust Name", "Prod Name", "Status"
+                    }
             ) {
                 Class[] types = new Class [] {
                     java.lang.String.class, java.lang.String.class, java.lang.String.class
@@ -192,6 +261,9 @@ public class OmazanUI extends javax.swing.JFrame {
                     return types [columnIndex];
                 }
             });
+        } catch (NamingException ex) {
+            Logger.getLogger(OmazanUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
             jScrollPane2.setViewportView(tableCustomer);
                      
 
@@ -363,11 +435,28 @@ public class OmazanUI extends javax.swing.JFrame {
 
         lblShipmentStatus.setText("Shipment Status :");
 
-        txtShipmentID.setText(" ");
+        txtShipmentID.setText("");
 
         cmbxShipmentStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "packaging", "ontheway", "delivered", "cancelled" }));
                 
         btnUpdateShipment.setText("Save");
+        
+        btnUpdateShipment.addMouseListener(new MouseAdapter() { 
+            public void mouseClicked(MouseEvent mouseEvent) {
+                            InitialContext context;
+                            try {
+                                context = new InitialContext();
+                                shipmentEntityFacade = (ShipmentEntityFacadeRemote) context.lookup("java:global/OmazanApp/OmazanApp-ejb/ShipmentEntityFacade");
+                                ShipmentEntity se = shipmentEntityFacade.find(Long.parseLong(txtShipmentID.getText()));
+                                System.out.println("Edit SHIPMENT: Id of customer: "+Long.parseLong(txtShipmentID.getText()));
+                                System.out.println("Edit SHIPMENT: Id of customer: "+cmbxShipmentStatus.getSelectedItem().toString());
+                                se.setShipstatus(cmbxShipmentStatus.getSelectedItem().toString());
+                                shipmentEntityFacade.edit(se);
+                            } catch (NamingException ex) {
+                                Logger.getLogger(OmazanUI.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+            }
+        });
 
         btnCancelShipment.setText("Cancel");  
         

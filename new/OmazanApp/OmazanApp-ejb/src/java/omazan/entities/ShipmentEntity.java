@@ -23,7 +23,9 @@ import javax.persistence.Table;
 @Table(name = "SHIPMENT")
 @NamedQueries({
     @NamedQuery(name = "findAllShipments",query = "SELECT s "
-    + "FROM ShipmentEntity s")
+            + "FROM ShipmentEntity s"),
+    @NamedQuery(name = "findAllShipmentsForGivenCust",query = "SELECT s "
+            + "FROM ShipmentEntity s WHERE s.custid = :custid")
 })
 public class ShipmentEntity implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -16,7 +16,7 @@ import omazan.entities.ShipmentEntity;
 @Remote
 public interface ShipmentEntityFacadeRemote {
 
-    void create(ShipmentEntity shipmentEntity);
+    ShipmentEntity create(ShipmentEntity shipmentEntity);
 
     void edit(ShipmentEntity shipmentEntity);
 
@@ -25,6 +25,8 @@ public interface ShipmentEntityFacadeRemote {
     ShipmentEntity find(Object id);
 
     List<ShipmentEntity> findAll();
+    
+    List<ShipmentEntity> findByCustId(long cid);
 
     List<ShipmentEntity> findRange(int[] range);
 
